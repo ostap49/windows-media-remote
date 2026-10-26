@@ -13,6 +13,6 @@ if ($LASTEXITCODE) { exit $LASTEXITCODE }
     --workpath (Join-Path $root ".cache\pyinstaller") `
     --specpath (Join-Path $root ".cache\pyinstaller") `
     --collect-submodules winrt --collect-submodules bleak --collect-submodules pycaw `
-    (Join-Path $root "windows\src\winmediaremote\__main__.py")
+    (Join-Path $root "windows\launcher.py")
 if ($LASTEXITCODE) { exit $LASTEXITCODE }
 Join-Path $root "dist\windows-media-remote.exe"
