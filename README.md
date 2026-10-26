@@ -12,30 +12,40 @@ The Flipper Zero shows what's playing on a Windows PC, received over Bluetooth L
 
 ## Setup
 
-### 1. Flipper app
+You need [Git](https://git-scm.com/download/win) and [Python 3.10+](https://www.python.org/downloads/) (tick **Add python.exe to PATH** in the installer). In **Command Prompt**:
 
-Download `win_media_remote.fap` from the CI artifacts, or build it:
-
-```sh
-sh scripts/build-flipper.sh   # uses uFBT and the firmware 1.4.3 SDK
+```bat
+cd %USERPROFILE%
+git clone -b claude/relaxed-lamport-d4gd0x https://github.com/ostap49/windows-media-remote.git
+cd windows-media-remote
 ```
 
-Copy it to `/ext/apps/Bluetooth/` with qFlipper, then open **Apps → Bluetooth → Win Media Remote**.
+All commands below run from this `windows-media-remote` folder.
+
+### 1. Flipper app
+
+Connect the Flipper over USB and close qFlipper. Then run:
+
+```bat
+powershell -ExecutionPolicy Bypass -File scripts\build-flipper.ps1 -Install
+```
+
+This downloads the firmware 1.4.3 SDK, builds the app, uploads it to the Flipper and starts it. Without `-Install`, it only builds `dist\win_media_remote-fw1.4.3.fap`, which you can copy to `/ext/apps/Bluetooth/` with qFlipper. Afterwards, open it from **Apps → Bluetooth → Win Media Remote**. On macOS/Linux, use `sh scripts/build-flipper.sh`.
 
 The companion also works with the original **Now Playing** app from the Flipper Apps Catalog. The protocol is the same; that app just says "Mac" on its screens.
 
 ### 2. Windows companion
 
-Build a single executable:
+Build a single executable and run it:
 
-```powershell
+```bat
 powershell -ExecutionPolicy Bypass -File scripts\build-windows.ps1
 dist\windows-media-remote.exe
 ```
 
 Or run from source:
 
-```powershell
+```bat
 pip install .\windows
 windows-media-remote
 ```
