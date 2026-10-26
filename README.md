@@ -30,7 +30,7 @@ Connect the Flipper over USB and close qFlipper. Then run:
 powershell -ExecutionPolicy Bypass -File scripts\build-flipper.ps1 -Install
 ```
 
-This downloads the SDK for the latest official firmware release, builds the app, uploads it to the Flipper and starts it. If your Flipper runs an older release, add `-Firmware 1.4.3` (or whatever version **Settings → About** shows); a mismatch shows "App Too Old" or "API mismatch" on the Flipper. Without `-Install`, it only builds `dist\win_media_remote-fwrelease.fap`, which you can copy to `/ext/apps/Bluetooth/` with qFlipper. Afterwards, open it from **Apps → Bluetooth → Win Media Remote**. On macOS/Linux, use `sh scripts/build-flipper.sh`.
+This downloads the SDK for the latest official firmware release, builds the app, uploads it to the Flipper and starts it. If your Flipper runs an older release, add `-Firmware 1.4.3` (or whatever version **Settings → About** shows); a mismatch shows "App Too Old" or "API mismatch" on the Flipper. On [Unleashed](https://github.com/DarkFlippers/unleashed-firmware) firmware, add `-Unleashed`; it builds against the latest Unleashed release SDK. Without `-Install`, it only builds `dist\win_media_remote-fwrelease.fap`, which you can copy to `/ext/apps/Bluetooth/` with qFlipper. Afterwards, open it from **Apps → Bluetooth → Win Media Remote**. On macOS/Linux, use `sh scripts/build-flipper.sh`.
 
 The companion also works with the original **Now Playing** app from the Flipper Apps Catalog. The protocol is the same; that app just says "Mac" on its screens.
 
