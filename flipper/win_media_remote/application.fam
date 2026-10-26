@@ -1,0 +1,7 @@
+App(
+ appid="win_media_remote", name="Win Media Remote", apptype=FlipperAppType.EXTERNAL,
+ entry_point="win_media_remote_app", requires=["bt", "gui", "storage"],
+ stack_size=4096, fap_version=(1,0), fap_category="Bluetooth",
+ fap_icon="assets/app.png",
+ fap_author="Windows Media Remote contributors", fap_description="Windows Now Playing display and BLE remote",
+)

@@ -1,0 +1,63 @@
+name: CI
+
+on:
+  push:
+  pull_request:
+
+jobs:
+  flipper:
+    name: Flipper app (${{ matrix.name }})
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - name: firmware 1.4.3
+            sdk-url: https://update.flipperzero.one/builds/firmware/1.4.3/flipper-z-f7-sdk-1.4.3.zip
+          - name: latest release
+            sdk-channel: release
+    steps:
+      - uses: actions/checkout@v4
+      - uses: flipperdevices/flipperzero-ufbt-action@v0.1
+        id: build
+        with:
+          app-dir: flipper/win_media_remote
+          sdk-url: ${{ matrix.sdk-url }}
+          sdk-hw-target: ${{ matrix.sdk-url && 'f7' || '' }}
+          sdk-channel: ${{ matrix.sdk-channel }}
+      - uses: actions/upload-artifact@v4
+        with:
+          name: win_media_remote-${{ steps.build.outputs.suffix }}
+          path: ${{ steps.build.outputs.fap-artifacts }}
+
+  companion-tests:
+    name: Companion tests (${{ matrix.os }})
+    runs-on: ${{ matrix.os }}
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [ubuntu-latest, windows-latest]
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - run: pip install -e "windows[test]"
+      - run: python -m pytest windows -v
+
+  companion-exe:
+    name: Companion executable
+    runs-on: windows-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - run: ./scripts/build-windows.ps1
+        shell: pwsh
+      - run: ./dist/windows-media-remote.exe --version
+        shell: pwsh
+      - uses: actions/upload-artifact@v4
+        with:
+          name: windows-media-remote-exe
+          path: dist/windows-media-remote.exe

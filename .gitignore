@@ -1,0 +1,11 @@
+dist/
+.cache/
+__pycache__/
+*.egg-info/
+.pytest_cache/
+build/
+flipper/*/dist/
+flipper/*/.vscode/
+flipper/*/.clang-format
+flipper/*/.editorconfig
+flipper/*/.gitignore
