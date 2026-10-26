@@ -49,7 +49,7 @@ if ($Flipper) {
     Write-Host "Building the Flipper app and installing it over USB (close qFlipper)..." -ForegroundColor Cyan
     $flipperArgs = @("-ExecutionPolicy", "Bypass", "-File", (Join-Path $source "scripts\build-flipper.ps1"), "-Install")
     if ($Unleashed) { $flipperArgs += "-Unleashed" }
-    & powershell @args
+    & powershell @flipperArgs
     if ($LASTEXITCODE) { Write-Host "Flipper app build failed." -ForegroundColor Red }
 }
 
