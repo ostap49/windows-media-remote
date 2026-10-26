@@ -1,8 +1,10 @@
-# Builds the Flipper app with uFBT against the official firmware SDK (default 1.4.3).
+# Builds the Flipper app with uFBT against the latest official firmware release.
+# Use -Firmware 1.4.3 (etc.) if your Flipper runs an older release; the SDK API
+# must match the firmware (Settings -> About), otherwise it shows "App Too Old".
 # -Install also uploads it to a Flipper connected over USB and starts it
 # (close qFlipper first so the serial port is free).
 param(
-    [string]$Firmware = "1.4.3",
+    [string]$Firmware = "release",
     [switch]$Install
 )
 $ErrorActionPreference = "Stop"
@@ -17,7 +19,11 @@ if ($LASTEXITCODE) { exit $LASTEXITCODE }
 # Keep the toolchain at uFBT's default ~\.ufbt: inside a deep project folder its
 # files exceed Windows' 260-character path limit and extraction fails.
 if (-not $env:UFBT_HOME) { $env:UFBT_HOME = Join-Path $HOME ".ufbt" }
-& $ufbt update --hw-target f7 --url "https://update.flipperzero.one/builds/firmware/$Firmware/flipper-z-f7-sdk-$Firmware.zip"
+if ($Firmware -eq "release") {
+    & $ufbt update --hw-target f7 --channel release
+} else {
+    & $ufbt update --hw-target f7 --url "https://update.flipperzero.one/builds/firmware/$Firmware/flipper-z-f7-sdk-$Firmware.zip"
+}
 if ($LASTEXITCODE) { exit $LASTEXITCODE }
 
 Push-Location (Join-Path $root "flipper\win_media_remote")
