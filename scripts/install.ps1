@@ -11,8 +11,11 @@ param(
 )
 $ErrorActionPreference = "Stop"
 
-$py = Get-Command python -ErrorAction SilentlyContinue
-if (-not $py -or $py.Source -like "*WindowsApps*") {
+# The WindowsApps "python" alias opens Microsoft Store when Python is absent, but
+# a Store-installed Python lives there too, so actually run it to check.
+$pyVersion = $null
+try { $pyVersion = & python -c "import sys; print(sys.version_info[0])" 2>$null } catch {}
+if ("$pyVersion".Trim() -ne "3") {
     Write-Host "Python is not installed. Install it from https://www.python.org/downloads/" -ForegroundColor Red
     Write-Host "(tick 'Add python.exe to PATH'), then open a NEW PowerShell window and run this again." -ForegroundColor Red
     return
