@@ -1,6 +1,8 @@
 # Builds dist\windows-media-remote.exe (single file, no Python needed to run it).
 $ErrorActionPreference = "Stop"
 $root = Split-Path -Parent $PSScriptRoot
+# PyInstaller refuses to run from C:\WINDOWS\system32 (where admin shells start).
+Set-Location $root
 $venv = Join-Path $root ".cache\venv"
 if (-not (Test-Path $venv)) { python -m venv $venv }
 $python = Join-Path $venv "Scripts\python.exe"

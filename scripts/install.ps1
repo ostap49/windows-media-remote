@@ -25,6 +25,7 @@ $install = Join-Path $HOME "FlipperRemote"
 $source = Join-Path $install "source"
 $zip = Join-Path $install "source.zip"
 New-Item -ItemType Directory -Force $install | Out-Null
+Set-Location $install
 
 Write-Host "Downloading the latest version..." -ForegroundColor Cyan
 Invoke-WebRequest "https://github.com/ostap49/windows-media-remote/archive/refs/heads/$Branch.zip" -OutFile $zip
