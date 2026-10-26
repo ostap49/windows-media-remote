@@ -14,7 +14,9 @@ $ufbt = Join-Path $venv "Scripts\ufbt.exe"
 & $python -m pip install --quiet --upgrade ufbt
 if ($LASTEXITCODE) { exit $LASTEXITCODE }
 
-$env:UFBT_HOME = Join-Path $root ".cache\ufbt"
+# Keep the toolchain at uFBT's default ~\.ufbt: inside a deep project folder its
+# files exceed Windows' 260-character path limit and extraction fails.
+if (-not $env:UFBT_HOME) { $env:UFBT_HOME = Join-Path $HOME ".ufbt" }
 & $ufbt update --hw-target f7 --url "https://update.flipperzero.one/builds/firmware/$Firmware/flipper-z-f7-sdk-$Firmware.zip"
 if ($LASTEXITCODE) { exit $LASTEXITCODE }
 
