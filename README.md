@@ -10,6 +10,16 @@ The Flipper Zero shows what's playing on a Windows PC, received over Bluetooth L
 - Windows 10 (1809 or later) or Windows 11 with Bluetooth 4.0+ LE.
 - To run from source: Python 3.10 or later. The prebuilt `.exe` needs nothing else.
 
+## Quick install
+
+Install [Python](https://www.python.org/downloads/) (tick **Add python.exe to PATH**), open a **new** PowerShell window, and run:
+
+```powershell
+& ([scriptblock]::Create((irm https://raw.githubusercontent.com/ostap49/windows-media-remote/claude/relaxed-lamport-d4gd0x/scripts/install.ps1)))
+```
+
+This downloads the latest version, builds the companion into `%USERPROFILE%\FlipperRemote` and creates a **Flipper Media Remote** desktop shortcut. Run the same command again to update. Add `-Flipper` to also build and install the Flipper app over USB (`-Flipper -Unleashed` on Unleashed firmware), and `-Startup` to start the companion at sign-in.
+
 ## Setup
 
 You need [Git](https://git-scm.com/download/win) and [Python 3.10+](https://www.python.org/downloads/) (tick **Add python.exe to PATH** in the installer). In **Command Prompt**:
